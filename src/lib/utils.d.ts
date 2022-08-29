@@ -1,5 +1,6 @@
 /// <reference types="node" />
 import { KeyValue, PsbtGlobal, PsbtGlobalUpdate, PsbtInput, PsbtInputUpdate, PsbtOutput, PsbtOutputUpdate } from './interfaces';
+export declare function toJson(parsed: any): string;
 export declare function checkForInput(inputs: PsbtInput[], inputIndex: number): PsbtInput;
 export declare function checkForOutput(outputs: PsbtOutput[], outputIndex: number): PsbtOutput;
 export declare function checkHasKey(checkKeyVal: KeyValue, keyVals: KeyValue[] | undefined, enumLength: number): void;

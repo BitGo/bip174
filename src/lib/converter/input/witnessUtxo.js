@@ -37,9 +37,9 @@ function encode(data) {
   };
 }
 exports.encode = encode;
-exports.expected = '{ script: Buffer; value: number; }';
+exports.expected = '{ script: Buffer; value: bigint; }';
 function check(data) {
-  return Buffer.isBuffer(data.script) && typeof data.value === 'number';
+  return Buffer.isBuffer(data.script) && typeof data.value === 'bigint';
 }
 exports.check = check;
 function canAdd(currentData, newData) {

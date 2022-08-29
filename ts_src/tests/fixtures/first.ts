@@ -1,3 +1,5 @@
+const b = (s: string): Buffer => Buffer.from(s, 'hex');
+
 export const fixtures = [
   {
     description: 'Check one fixture',
@@ -17,44 +19,51 @@ export const fixtures = [
       'afe127fefca4995f26f82083bd10b4a6ba670000008000000080050000800000',
     output: {
       globalMap: {
-        unsignedTx:
+        unsignedTx: b(
           '0200000001279a2323a5dfb51fc45f220fa58b0fc13e1e3342792a85' +
-          'd7e36cd6333b5cbc390000000000ffffffff01a05aea0b000000001976a914ffe9c0' +
-          '061097cc3b636f2cb0460fa4fc427d2b4588ac00000000',
+            'd7e36cd6333b5cbc390000000000ffffffff01a05aea0b000000001976a914ffe9c0' +
+            '061097cc3b636f2cb0460fa4fc427d2b4588ac00000000',
+        ),
       },
       inputs: [
         {
           witnessUtxo: {
-            script: 'a9146345200f68d189e1adc0df1c4d16ea8f14c0dbeb87',
-            value: 199909013,
+            script: b('a9146345200f68d189e1adc0df1c4d16ea8f14c0dbeb87'),
+            value: BigInt(199909013),
           },
           partialSig: [
             {
-              pubkey:
+              pubkey: b(
                 '03b1341ccba7683b6af4f1238cd6e97e7167d569fac47f1e48d47541844355bd46',
-              signature:
+              ),
+              signature: b(
                 '304302200424b58effaaa694e1559ea5c93bbfd4a89064224055cdf070b6' +
-                '771469442d07021f5c8eb0fea6516d60b8acb33ad64ede60e8785bfb3aa9' +
-                '4b99bdf86151db9a9a01',
+                  '771469442d07021f5c8eb0fea6516d60b8acb33ad64ede60e8785bfb3aa9' +
+                  '4b99bdf86151db9a9a01',
+              ),
             },
           ],
-          redeemScript:
+          redeemScript: b(
             '0020771fd18ad459666dd49f3d564e3dbc42f4c84774e360ada16816a8ed488d5681',
-          witnessScript:
+          ),
+          witnessScript: b(
             '522103b1341ccba7683b6af4f1238cd6e97e7167d569fac47f1e48d4754184' +
-            '4355bd462103de55d1e1dac805e3f8a58c1fbf9b94c02f3dbaafe127fefca4' +
-            '995f26f82083bd52ae',
+              '4355bd462103de55d1e1dac805e3f8a58c1fbf9b94c02f3dbaafe127fefca4' +
+              '995f26f82083bd52ae',
+          ),
           bip32Derivation: [
             {
-              masterFingerprint: 'b4a6ba67',
-              pubkey:
+              masterFingerprint: b('b4a6ba67'),
+              pubkey: b(
                 '03b1341ccba7683b6af4f1238cd6e97e7167d569fac47f1e48d47541844355bd46',
+              ),
               path: "m/0'/0'/4'",
             },
             {
-              masterFingerprint: 'b4a6ba67',
-              pubkey:
+              masterFingerprint: b('b4a6ba67'),
+              pubkey: b(
                 '03de55d1e1dac805e3f8a58c1fbf9b94c02f3dbaafe127fefca4995f26f82083bd',
+              ),
               path: "m/0'/0'/5'",
             },
           ],

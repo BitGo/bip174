@@ -1,6 +1,8 @@
 import * as tape from 'tape';
 import { Psbt } from '../lib/psbt';
+import { toJson } from '../lib/utils';
 import { fixtures } from './fixtures/first';
+import { fromJson } from './utils/json';
 import { transactionFromBuffer } from './utils/txTools';
 
 for (const f of fixtures) {
@@ -14,20 +16,8 @@ for (const f of fixtures) {
     t.strictEqual(parsed.toHex(), parsed3.toHex());
     // @ts-ignore
     parsed3.globalMap.unsignedTx = parsed3.globalMap.unsignedTx.toBuffer();
-    t.deepEqual(JSON.parse(jsonify(parsed3)), f.output);
+    t.deepEqual(fromJson(toJson(parsed3)), f.output);
     t.equal(hex, hex2);
     t.end();
   });
-}
-
-function jsonify(parsed: any): string {
-  return JSON.stringify(
-    parsed,
-    (key, value) => {
-      return key !== undefined && value !== undefined && value.type === 'Buffer'
-        ? Buffer.from(value.data).toString('hex')
-        : value;
-    },
-    2,
-  );
 }

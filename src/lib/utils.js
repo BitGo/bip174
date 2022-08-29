@@ -1,6 +1,20 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 const converter = require('./converter');
+function toJson(parsed) {
+  return JSON.stringify(
+    parsed,
+    (key, value) => {
+      if (key === undefined) return value;
+      if (value.type === 'Buffer')
+        return `0x${Buffer.from(value.data).toString('hex')}`;
+      if (typeof value === 'bigint') return value.toString() + 'n';
+      return value;
+    },
+    2,
+  );
+}
+exports.toJson = toJson;
 function checkForInput(inputs, inputIndex) {
   const input = inputs[inputIndex];
   if (input === undefined) throw new Error(`No input #${inputIndex}`);
@@ -57,7 +71,7 @@ exports.inputCheckUncleanFinalized = inputCheckUncleanFinalized;
 function throwForUpdateMaker(typeName, name, expected, data) {
   throw new Error(
     `Data for ${typeName} key ${name} is incorrect: Expected ` +
-      `${expected} and got ${JSON.stringify(data)}`,
+      `${expected} and got ${toJson(data)}`,
   );
 }
 function updateMaker(typeName) {

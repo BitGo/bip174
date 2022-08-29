@@ -99,7 +99,7 @@ export interface Bip32Derivation {
 
 export interface WitnessUtxo {
   script: Buffer;
-  value: number;
+  value: bigint;
 }
 
 export type NonWitnessUtxo = Buffer;

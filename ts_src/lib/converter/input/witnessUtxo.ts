@@ -40,9 +40,9 @@ export function encode(data: WitnessUtxo): KeyValue {
   };
 }
 
-export const expected = '{ script: Buffer; value: number; }';
+export const expected = '{ script: Buffer; value: bigint; }';
 export function check(data: any): data is WitnessUtxo {
-  return Buffer.isBuffer(data.script) && typeof data.value === 'number';
+  return Buffer.isBuffer(data.script) && typeof data.value === 'bigint';
 }
 
 export function canAdd(currentData: any, newData: any): boolean {

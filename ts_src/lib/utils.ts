@@ -9,6 +9,20 @@ import {
   PsbtOutputUpdate,
 } from './interfaces';
 
+export function toJson(parsed: any): string {
+  return JSON.stringify(
+    parsed,
+    (key, value) => {
+      if (key === undefined) return value;
+      if (value.type === 'Buffer')
+        return `0x${Buffer.from(value.data).toString('hex')}`;
+      if (typeof value === 'bigint') return value.toString() + 'n';
+      return value;
+    },
+    2,
+  );
+}
+
 export function checkForInput(
   inputs: PsbtInput[],
   inputIndex: number,
@@ -83,7 +97,7 @@ function throwForUpdateMaker(
 ): void {
   throw new Error(
     `Data for ${typeName} key ${name} is incorrect: Expected ` +
-      `${expected} and got ${JSON.stringify(data)}`,
+      `${expected} and got ${toJson(data)}`,
   );
 }
 

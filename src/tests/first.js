@@ -2,7 +2,9 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 const tape = require('tape');
 const psbt_1 = require('../lib/psbt');
+const utils_1 = require('../lib/utils');
 const first_1 = require('./fixtures/first');
+const json_1 = require('./utils/json');
 const txTools_1 = require('./utils/txTools');
 for (const f of first_1.fixtures) {
   tape('Test: ' + f.description, t => {
@@ -18,19 +20,8 @@ for (const f of first_1.fixtures) {
     t.strictEqual(parsed.toHex(), parsed3.toHex());
     // @ts-ignore
     parsed3.globalMap.unsignedTx = parsed3.globalMap.unsignedTx.toBuffer();
-    t.deepEqual(JSON.parse(jsonify(parsed3)), f.output);
+    t.deepEqual(json_1.fromJson(utils_1.toJson(parsed3)), f.output);
     t.equal(hex, hex2);
     t.end();
   });
-}
-function jsonify(parsed) {
-  return JSON.stringify(
-    parsed,
-    (key, value) => {
-      return key !== undefined && value !== undefined && value.type === 'Buffer'
-        ? Buffer.from(value.data).toString('hex')
-        : value;
-    },
-    2,
-  );
 }

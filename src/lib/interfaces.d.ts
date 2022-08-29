@@ -74,7 +74,7 @@ export interface Bip32Derivation {
 }
 export interface WitnessUtxo {
     script: Buffer;
-    value: number;
+    value: bigint;
 }
 export declare type NonWitnessUtxo = Buffer;
 export declare type SighashType = number;

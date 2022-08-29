@@ -62,7 +62,7 @@ exports.fixtures = [
         {
           witnessUtxo: {
             script: b('a914b7f5faf40e3d40a5a459b1db3535f2b72fa921e887'),
-            value: 200000000,
+            value: BigInt(200000000),
           },
           redeemScript: b(
             '00208c2353173743b595dfb4a07b72ba8e42e3797da74e87fe7d9d7497e3b2028903',
