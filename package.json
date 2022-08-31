@@ -1,7 +1,7 @@
 {
   "name": "@bitgo/bip174",
   "version": "3.0.0",
-  "description": "",
+  "description": "Fork of bip174 with BitGo specific changes",
   "main": "src/lib/psbt.js",
   "types": "src/lib/psbt.d.ts",
   "files": [
@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bitcoinjs/bip174.git"
+    "url": "git+https://github.com/BitGo/bip174.git"
   },
   "devDependencies": {
     "@types/node": "12.0.8",
@@ -43,7 +43,10 @@
   "author": "Jonathan Underwood",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bitcoinjs/bip174/issues"
+    "url": "https://github.com/BitGo/bip174/issues"
   },
-  "homepage": "https://github.com/bitcoinjs/bip174#readme"
+  "homepage": "https://github.com/BitGo/bip174#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
