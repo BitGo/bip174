@@ -1,5 +1,5 @@
 {
-  "name": "bip174",
+  "name": "@bitgo/bip174",
   "version": "2.1.0",
   "description": "",
   "main": "src/lib/psbt.js",
