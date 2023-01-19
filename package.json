@@ -1,6 +1,6 @@
 {
-  "name": "@bitgo/bip174",
-  "version": "3.1.0",
+  "name": "@bitgo-forks/bip174",
+  "version": "0.0.0-semantic-release-managed",
   "description": "Fork of bip174 with BitGo specific changes",
   "main": "src/lib/psbt.js",
   "types": "src/lib/psbt.d.ts",
@@ -36,6 +36,7 @@
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rimraf": "^2.6.3",
+    "semantic-release": "19.0.5",
     "tape": "^4.10.2",
     "tslint": "5.17.0",
     "typescript": "3.5.2"
