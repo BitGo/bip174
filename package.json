@@ -1,6 +1,6 @@
 {
   "name": "@bitgo/bip174",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Fork of bip174 with BitGo specific changes",
   "main": "src/lib/psbt.js",
   "types": "src/lib/psbt.d.ts",
