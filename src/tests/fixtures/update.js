@@ -65,7 +65,7 @@ exports.fixtures = [
             pubkey: b(
               '023add904f3d6dcf59ddb906b0dee23529b7ffb9ed50e5e86151926860221f0e73',
             ),
-            path: "m/0'/0'/3'",
+            path: "0'/0'/3'",
           },
           {
             masterFingerprint: b('d90c6a4f'),
@@ -96,7 +96,7 @@ exports.fixtures = [
             pubkey: b(
               '027f6399757d2eff55a136ad02c684b1838b6556e5f1b6b34282a94b6b50051096',
             ),
-            path: "m/0'/0'/5'",
+            path: "0'/0'/5'",
           },
         ],
       },

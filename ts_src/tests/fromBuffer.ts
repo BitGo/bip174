@@ -33,6 +33,17 @@ for (const f of fixtures) {
     t.throws(() => {
       Psbt.fromHex(f.hex, fromBuf);
     }, new RegExp(f.exception));
+    t.throws(() => {
+      Psbt.fromBuffer(Buffer.from(f.hex, 'hex'), fromBuf);
+    }, new RegExp(f.exception));
+    t.throws(() => {
+      Psbt.fromHex(f.hex, fromBuf, { bip32PathsAbsolute: false });
+    }, new RegExp(f.exception));
+    t.throws(() => {
+      Psbt.fromBuffer(Buffer.from(f.hex, 'hex'), fromBuf, {
+        bip32PathsAbsolute: false,
+      });
+    }, new RegExp(f.exception));
     t.end();
   });
 }

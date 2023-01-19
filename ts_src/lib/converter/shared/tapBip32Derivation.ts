@@ -7,7 +7,7 @@ const isValidBIP340Key = (pubkey: Buffer): boolean => pubkey.length === 32;
 export function makeConverter(
   TYPE_BYTE: number,
 ): {
-  decode: (keyVal: KeyValue) => TapBip32Derivation;
+  decode: (keyVal: KeyValue, bip32PathsAbsolute: boolean) => TapBip32Derivation;
   encode: (data: TapBip32Derivation) => KeyValue;
   check: (data: any) => data is TapBip32Derivation;
   expected: string;
@@ -18,13 +18,19 @@ export function makeConverter(
   ) => boolean;
 } {
   const parent = bip32Derivation.makeConverter(TYPE_BYTE, isValidBIP340Key);
-  function decode(keyVal: KeyValue): TapBip32Derivation {
+  function decode(
+    keyVal: KeyValue,
+    bip32PathsAbsolute = true,
+  ): TapBip32Derivation {
     const nHashes = varuint.decode(keyVal.value);
     const nHashesLen = varuint.encodingLength(nHashes);
-    const base = parent.decode({
-      key: keyVal.key,
-      value: keyVal.value.slice(nHashesLen + nHashes * 32),
-    });
+    const base = parent.decode(
+      {
+        key: keyVal.key,
+        value: keyVal.value.slice(nHashesLen + nHashes * 32),
+      },
+      bip32PathsAbsolute,
+    );
     const leafHashes: Buffer[] = new Array(nHashes);
     for (let i = 0, _offset = nHashesLen; i < nHashes; i++, _offset += 32) {
       leafHashes[i] = keyVal.value.slice(_offset, _offset + 32);
