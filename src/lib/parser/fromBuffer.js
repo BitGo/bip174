@@ -4,7 +4,7 @@ const convert = require('../converter');
 const tools_1 = require('../converter/tools');
 const varuint = require('../converter/varint');
 const typeFields_1 = require('../typeFields');
-function psbtFromBuffer(buffer, txGetter) {
+function psbtFromBuffer(buffer, txGetter, { bip32PathsAbsolute = true } = {}) {
   let offset = 0;
   function varSlice() {
     const keyLen = varuint.decode(buffer, offset);
@@ -114,11 +114,15 @@ function psbtFromBuffer(buffer, txGetter) {
     }
     outputKeyVals.push(output);
   }
-  return psbtFromKeyVals(unsignedTx, {
-    globalMapKeyVals,
-    inputKeyVals,
-    outputKeyVals,
-  });
+  return psbtFromKeyVals(
+    unsignedTx,
+    {
+      globalMapKeyVals,
+      inputKeyVals,
+      outputKeyVals,
+    },
+    { bip32PathsAbsolute },
+  );
 }
 exports.psbtFromBuffer = psbtFromBuffer;
 function checkKeyBuffer(type, keyBuf, keyNum) {
@@ -132,6 +136,7 @@ exports.checkKeyBuffer = checkKeyBuffer;
 function psbtFromKeyVals(
   unsignedTx,
   { globalMapKeyVals, inputKeyVals, outputKeyVals },
+  { bip32PathsAbsolute = true } = {},
 ) {
   // That was easy :-)
   const globalMap = {
@@ -244,7 +249,7 @@ function psbtFromKeyVals(
             input.bip32Derivation = [];
           }
           input.bip32Derivation.push(
-            convert.inputs.bip32Derivation.decode(keyVal),
+            convert.inputs.bip32Derivation.decode(keyVal, bip32PathsAbsolute),
           );
           break;
         case typeFields_1.InputTypes.FINAL_SCRIPTSIG:
@@ -298,7 +303,10 @@ function psbtFromKeyVals(
             input.tapBip32Derivation = [];
           }
           input.tapBip32Derivation.push(
-            convert.inputs.tapBip32Derivation.decode(keyVal),
+            convert.inputs.tapBip32Derivation.decode(
+              keyVal,
+              bip32PathsAbsolute,
+            ),
           );
           break;
         case typeFields_1.InputTypes.TAP_INTERNAL_KEY:
@@ -357,7 +365,7 @@ function psbtFromKeyVals(
             output.bip32Derivation = [];
           }
           output.bip32Derivation.push(
-            convert.outputs.bip32Derivation.decode(keyVal),
+            convert.outputs.bip32Derivation.decode(keyVal, bip32PathsAbsolute),
           );
           break;
         case typeFields_1.OutputTypes.TAP_INTERNAL_KEY:
@@ -381,7 +389,10 @@ function psbtFromKeyVals(
             output.tapBip32Derivation = [];
           }
           output.tapBip32Derivation.push(
-            convert.outputs.tapBip32Derivation.decode(keyVal),
+            convert.outputs.tapBip32Derivation.decode(
+              keyVal,
+              bip32PathsAbsolute,
+            ),
           );
           break;
         default:

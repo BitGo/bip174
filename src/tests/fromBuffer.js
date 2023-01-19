@@ -29,6 +29,17 @@ for (const f of fromBuffer_1.fixtures) {
     t.throws(() => {
       psbt_1.Psbt.fromHex(f.hex, fromBuf);
     }, new RegExp(f.exception));
+    t.throws(() => {
+      psbt_1.Psbt.fromBuffer(Buffer.from(f.hex, 'hex'), fromBuf);
+    }, new RegExp(f.exception));
+    t.throws(() => {
+      psbt_1.Psbt.fromHex(f.hex, fromBuf, { bip32PathsAbsolute: false });
+    }, new RegExp(f.exception));
+    t.throws(() => {
+      psbt_1.Psbt.fromBuffer(Buffer.from(f.hex, 'hex'), fromBuf, {
+        bip32PathsAbsolute: false,
+      });
+    }, new RegExp(f.exception));
     t.end();
   });
 }

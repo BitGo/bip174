@@ -12,16 +12,18 @@ class Psbt {
       unsignedTx: tx,
     };
   }
-  static fromBase64(data, txFromBuffer) {
+  static fromBase64(data, txFromBuffer, { bip32PathsAbsolute = true } = {}) {
     const buffer = Buffer.from(data, 'base64');
-    return this.fromBuffer(buffer, txFromBuffer);
+    return this.fromBuffer(buffer, txFromBuffer, { bip32PathsAbsolute });
   }
-  static fromHex(data, txFromBuffer) {
+  static fromHex(data, txFromBuffer, { bip32PathsAbsolute = true } = {}) {
     const buffer = Buffer.from(data, 'hex');
-    return this.fromBuffer(buffer, txFromBuffer);
+    return this.fromBuffer(buffer, txFromBuffer, { bip32PathsAbsolute });
   }
-  static fromBuffer(buffer, txFromBuffer) {
-    const results = parser_1.psbtFromBuffer(buffer, txFromBuffer);
+  static fromBuffer(buffer, txFromBuffer, { bip32PathsAbsolute = true } = {}) {
+    const results = parser_1.psbtFromBuffer(buffer, txFromBuffer, {
+      bip32PathsAbsolute,
+    });
     const psbt = new this(results.globalMap.unsignedTx);
     Object.assign(psbt, results);
     return psbt;

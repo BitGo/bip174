@@ -27,7 +27,7 @@ declare const inputs: {
     porCommitment: typeof porCommitment;
     witnessUtxo: typeof witnessUtxo;
     bip32Derivation: {
-        decode: (keyVal: import("../interfaces").KeyValue) => import("../interfaces").Bip32Derivation;
+        decode: (keyVal: import("../interfaces").KeyValue, bip32PathsAbsolute?: boolean | undefined) => import("../interfaces").Bip32Derivation;
         encode: (data: import("../interfaces").Bip32Derivation) => import("../interfaces").KeyValue;
         check: (data: any) => data is import("../interfaces").Bip32Derivation;
         expected: string;
@@ -52,7 +52,7 @@ declare const inputs: {
     tapScriptSig: typeof tapScriptSig;
     tapLeafScript: typeof tapLeafScript;
     tapBip32Derivation: {
-        decode: (keyVal: import("../interfaces").KeyValue) => import("../interfaces").TapBip32Derivation;
+        decode: (keyVal: import("../interfaces").KeyValue, bip32PathsAbsolute: boolean) => import("../interfaces").TapBip32Derivation;
         encode: (data: import("../interfaces").TapBip32Derivation) => import("../interfaces").KeyValue;
         check: (data: any) => data is import("../interfaces").TapBip32Derivation;
         expected: string;
@@ -69,7 +69,7 @@ declare const inputs: {
 };
 declare const outputs: {
     bip32Derivation: {
-        decode: (keyVal: import("../interfaces").KeyValue) => import("../interfaces").Bip32Derivation;
+        decode: (keyVal: import("../interfaces").KeyValue, bip32PathsAbsolute?: boolean | undefined) => import("../interfaces").Bip32Derivation;
         encode: (data: import("../interfaces").Bip32Derivation) => import("../interfaces").KeyValue;
         check: (data: any) => data is import("../interfaces").Bip32Derivation;
         expected: string;
@@ -91,7 +91,7 @@ declare const outputs: {
     };
     checkPubkey: (keyVal: import("../interfaces").KeyValue) => Buffer | undefined;
     tapBip32Derivation: {
-        decode: (keyVal: import("../interfaces").KeyValue) => import("../interfaces").TapBip32Derivation;
+        decode: (keyVal: import("../interfaces").KeyValue, bip32PathsAbsolute: boolean) => import("../interfaces").TapBip32Derivation;
         encode: (data: import("../interfaces").TapBip32Derivation) => import("../interfaces").KeyValue;
         check: (data: any) => data is import("../interfaces").TapBip32Derivation;
         expected: string;

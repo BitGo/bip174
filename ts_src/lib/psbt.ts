@@ -32,24 +32,29 @@ export class Psbt {
     this: T,
     data: string,
     txFromBuffer: TransactionFromBuffer,
+    { bip32PathsAbsolute = true } = {},
   ): InstanceType<T> {
     const buffer = Buffer.from(data, 'base64');
-    return this.fromBuffer(buffer, txFromBuffer);
+    return this.fromBuffer(buffer, txFromBuffer, { bip32PathsAbsolute });
   }
   static fromHex<T extends typeof Psbt>(
     this: T,
     data: string,
     txFromBuffer: TransactionFromBuffer,
+    { bip32PathsAbsolute = true } = {},
   ): InstanceType<T> {
     const buffer = Buffer.from(data, 'hex');
-    return this.fromBuffer(buffer, txFromBuffer);
+    return this.fromBuffer(buffer, txFromBuffer, { bip32PathsAbsolute });
   }
   static fromBuffer<T extends typeof Psbt>(
     this: T,
     buffer: Buffer,
     txFromBuffer: TransactionFromBuffer,
+    { bip32PathsAbsolute = true } = {},
   ): InstanceType<T> {
-    const results = psbtFromBuffer(buffer, txFromBuffer);
+    const results = psbtFromBuffer(buffer, txFromBuffer, {
+      bip32PathsAbsolute,
+    });
     const psbt = new this(results.globalMap.unsignedTx) as InstanceType<T>;
     Object.assign(psbt, results);
     return psbt;

@@ -5,13 +5,16 @@ const bip32Derivation = require('./bip32Derivation');
 const isValidBIP340Key = pubkey => pubkey.length === 32;
 function makeConverter(TYPE_BYTE) {
   const parent = bip32Derivation.makeConverter(TYPE_BYTE, isValidBIP340Key);
-  function decode(keyVal) {
+  function decode(keyVal, bip32PathsAbsolute = true) {
     const nHashes = varuint.decode(keyVal.value);
     const nHashesLen = varuint.encodingLength(nHashes);
-    const base = parent.decode({
-      key: keyVal.key,
-      value: keyVal.value.slice(nHashesLen + nHashes * 32),
-    });
+    const base = parent.decode(
+      {
+        key: keyVal.key,
+        value: keyVal.value.slice(nHashesLen + nHashes * 32),
+      },
+      bip32PathsAbsolute,
+    );
     const leafHashes = new Array(nHashes);
     for (let i = 0, _offset = nHashesLen; i < nHashes; i++, _offset += 32) {
       leafHashes[i] = keyVal.value.slice(_offset, _offset + 32);
