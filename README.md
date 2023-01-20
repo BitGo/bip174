@@ -4,7 +4,11 @@
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-A [BIP174](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki) compatible partial Transaction encoding library.
+BitGo's fork of a [BIP174](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki) compatible partial Transaction encoding library.
+
+*When rebasing this fork on upstream, tag the upstream commit with a base
+version that semver should continue from. Eg. upstream `v2.1.0` might get
+tagged with `v3.1.0-rc.0`, so that semver picks up from `v3.1.0-rc.1`.*
 
 ## Bitcoin users, use bitcoinjs-lib's Psbt class.
 
