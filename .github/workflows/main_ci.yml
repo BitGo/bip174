@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - '!release-do-not-use'
   pull_request:
 
 jobs:
