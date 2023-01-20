@@ -1,5 +1,6 @@
 {
   "branches": [
+    "release-do-not-use",
     {
       "name": "master",
       "prerelease": true
