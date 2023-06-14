@@ -27,6 +27,10 @@ function check(data) {
 }
 exports.check = check;
 function canAdd(currentData, newData) {
-  return !!currentData && !!newData && currentData.sighashType === undefined;
+  return (
+    !!currentData &&
+    newData !== undefined &&
+    currentData.sighashType === undefined
+  );
 }
 exports.canAdd = canAdd;

@@ -27,5 +27,9 @@ export function check(data: any): data is SighashType {
 }
 
 export function canAdd(currentData: any, newData: any): boolean {
-  return !!currentData && !!newData && currentData.sighashType === undefined;
+  return (
+    !!currentData &&
+    newData !== undefined &&
+    currentData.sighashType === undefined
+  );
 }

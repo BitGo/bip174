@@ -207,6 +207,14 @@ export const fixtures = {
     {
       method: 'updateInput',
       addInputOutput: true,
+      args: [0, { sighashType: 0 }],
+      expected:
+        'cHNidP8BAFMBAAAAAdSnb/ld4fTAFho+U+qHapHtlTMa6NAS2B+XE4SYzl2GAwAAAAD/' +
+        '////AdIClkkAAAAAF6kU4Yhw8sKX+/ylTFxvZFx3RaW2btqHAAAAAAABAwQAAAAAAAA=',
+    },
+    {
+      method: 'updateInput',
+      addInputOutput: true,
       args: [0, { redeemScript: Buffer.from([1, 2, 3]) }],
       expected:
         'cHNidP8BAFMBAAAAAdSnb/ld4fTAFho+U+qHapHtlTMa6NAS2B+XE4SYzl2GAwAAAAD/' +
