@@ -1,4 +1,11 @@
 name: Run Tests
+permissions:
+  # Needed for OIDC Trusted Publishing
+  id-token: write
+  # Needed for semantic-release
+  contents: write
+  pull-requests: write
+  issues: write
 
 on:
   push:
@@ -11,66 +18,67 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 12
+          node-version: 22
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm audit --production
   unit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 12
+          node-version: 22
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run unit
   coverage:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 12
+          node-version: 22
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run coverage
   format:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 12
+          node-version: 22
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run format:ci
   gitdiff:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 12
+          node-version: 22
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run gitdiff:ci
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 12
+          node-version: 22
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run lint
   release:
     if: github.repository_owner == 'BitGo' && github.event_name == 'push' && github.ref_name == 'master'
     runs-on: ubuntu-latest
+    environment: publish-bip174
     needs:
       - audit
       - unit
@@ -79,13 +87,15 @@ jobs:
       - gitdiff
       - lint
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 14
+          node-version: 22
           cache: 'npm'
+      - name: Ensure npm 11.5.1
+        run: |
+          npm install -g npm@11.5.1
       - run: npm ci
       - run: ./node_modules/.bin/semantic-release
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
