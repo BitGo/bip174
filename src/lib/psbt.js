@@ -112,7 +112,7 @@ class Psbt {
       throw new Error('unknownKeyVals must be an Array');
     }
     addKeyVals.forEach(keyVal =>
-      this.addUnknownKeyValToInput(outputIndex, keyVal),
+      this.addUnknownKeyValToOutput(outputIndex, keyVal),
     );
     utils_1.addOutputAttributes(this.outputs, outputData);
     return this;
