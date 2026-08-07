@@ -28,6 +28,9 @@ function checkForOutput(outputs, outputIndex) {
 }
 exports.checkForOutput = checkForOutput;
 function checkHasKey(checkKeyVal, keyVals, enumLength) {
+  if (checkKeyVal.key.length === 0) {
+    throw new Error(`Key must not be empty`);
+  }
   if (checkKeyVal.key[0] < enumLength) {
     throw new Error(
       `Use the method for your specific key instead of addUnknownKeyVal*`,
@@ -41,14 +44,16 @@ function checkHasKey(checkKeyVal, keyVals, enumLength) {
   }
 }
 exports.checkHasKey = checkHasKey;
+// Returns max numeric enum value + 1, which is the correct upper bound for
+// known type bytes. Using member count would give the wrong answer for enums
+// with non-contiguous values (e.g. OutputTypes jumps from 0x02 to 0x05).
 function getEnumLength(myenum) {
-  let count = 0;
-  Object.keys(myenum).forEach(val => {
-    if (Number(isNaN(Number(val)))) {
-      count++;
-    }
-  });
-  return count;
+  return (
+    Object.keys(myenum)
+      .map(Number)
+      .filter(n => !isNaN(n))
+      .reduce((max, n) => Math.max(max, n), -1) + 1
+  );
 }
 exports.getEnumLength = getEnumLength;
 function inputCheckUncleanFinalized(inputIndex, input) {
