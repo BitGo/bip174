@@ -74,4 +74,16 @@ exports.fixtures = {
       msg: '^RangeError: value out of range$',
     },
   ],
+  // Non-minimal encodings: decode must reject these (Bitcoin Core does)
+  nonCanonical: [
+    { hex: 'fd0000' },
+    { hex: 'fd0500' },
+    { hex: 'fdfc00' },
+    { hex: 'fe00000000' },
+    { hex: 'fe05000000' },
+    { hex: 'feffff0000' },
+    { hex: 'ff0000000000000000' },
+    { hex: 'ff0500000000000000' },
+    { hex: 'ffffffffff00000000' },
+  ],
 };

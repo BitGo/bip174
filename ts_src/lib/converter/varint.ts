@@ -46,12 +46,19 @@ export function encode(
   return buffer;
 }
 
+function checkCanonical(n: number, minimum: number): void {
+  // Reject non-minimal encodings, as Bitcoin Core's ReadCompactSize does.
+  if (n < minimum)
+    throw new RangeError('Format Error: non-canonical varint encoding');
+}
+
 export function decode(buffer: Buffer, offset?: number): number {
   if (!Buffer.isBuffer(buffer))
     throw new TypeError('buffer must be a Buffer instance');
   if (!offset) offset = 0;
 
   const first = buffer.readUInt8(offset);
+  let _number: number;
 
   // 8 bit
   if (first < 0xfd) {
@@ -60,24 +67,27 @@ export function decode(buffer: Buffer, offset?: number): number {
 
     // 16 bit
   } else if (first === 0xfd) {
+    _number = buffer.readUInt16LE(offset + 1);
+    checkCanonical(_number, 0xfd);
     Object.assign(decode, { bytes: 3 });
-    return buffer.readUInt16LE(offset + 1);
 
     // 32 bit
   } else if (first === 0xfe) {
+    _number = buffer.readUInt32LE(offset + 1);
+    checkCanonical(_number, 0x10000);
     Object.assign(decode, { bytes: 5 });
-    return buffer.readUInt32LE(offset + 1);
 
     // 64 bit
   } else {
-    Object.assign(decode, { bytes: 9 });
     const lo = buffer.readUInt32LE(offset + 1);
     const hi = buffer.readUInt32LE(offset + 5);
-    const _number = hi * 0x0100000000 + lo;
+    _number = hi * 0x0100000000 + lo;
     checkUInt53(_number);
-
-    return _number;
+    checkCanonical(_number, 0x100000000);
+    Object.assign(decode, { bytes: 9 });
   }
+
+  return _number;
 }
 
 export function encodingLength(_number: number): number {

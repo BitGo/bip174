@@ -44,6 +44,14 @@ varint_1.fixtures.invalid.forEach((fixture, i) => {
     });
   }
 });
+varint_1.fixtures.nonCanonical.forEach((fixture, i) => {
+  test('non-canonical decode #' + (i + 1), t => {
+    t.throws(() => {
+      varuint.decode(Buffer.from(fixture.hex, 'hex'));
+    }, new RegExp('^RangeError: Format Error: non-canonical varint encoding$'));
+    t.end();
+  });
+});
 test('encode', t => {
   t.test('write to buffer with offset', _t => {
     const buffer = Buffer.from([0x00, 0x00]);
